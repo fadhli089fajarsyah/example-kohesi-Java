@@ -1,15 +1,22 @@
 public class ContohKohesi {
 
     // 1. Sequential Cohesion (Kohesi Berurutan)
-    // Output dari satu langkah digunakan sebagai input langkah berikutnya
+    // Setiap langkah bergantung pada hasil sebelumnya
+    public void prosesAngka(int angka) {
+        int hasilKali = angka * 2;
+        int hasilTambah = hasilKali + 5;
+        System.out.println("Hasil akhir: " + hasilTambah);
+    }
+
+    // Method tambahan untuk mendukung contoh sequential cohesion
     public void prosesNama(String nama) {
-        String namaBersih = nama.trim();
-        String namaHurufBesar = namaBersih.toUpperCase();
-        System.out.println("Nama diproses: " + namaHurufBesar);
+        String dibersihkan = nama.trim();
+        String hurufBesar = dibersihkan.toUpperCase();
+        System.out.println("Nama akhir: " + hurufBesar);
     }
 
     // 2. Logical Cohesion (Kohesi Logis)
-    // Melakukan operasi berbeda tergantung kondisi
+    // Operasi berbeda dipilih berdasarkan kondisi logika
     public void aksi(String jenis) {
         if (jenis.equals("print")) {
             System.out.println("Mencetak data...");
@@ -17,32 +24,26 @@ public class ContohKohesi {
             System.out.println("Menyimpan data...");
         } else if (jenis.equals("hapus")) {
             System.out.println("Menghapus data...");
+        } else {
+            System.out.println("Aksi tidak dikenali.");
         }
     }
 
     // 3. Functional Cohesion (Kohesi Fungsional)
-    // Melakukan satu tugas spesifik: menghitung luas persegi
+    // Fokus melakukan satu tugas: menghitung luas persegi
     public int hitungLuas(int sisi) {
         return sisi * sisi;
     }
 
     // 4. Communicational Cohesion (Kohesi Komunikasi)
-    // Semua baris menggunakan data dari objek yang sama
+    // Semua baris bekerja menggunakan data dari objek Mahasiswa
     public void tampilkanInfo(Mahasiswa mhs) {
         System.out.println("Nama: " + mhs.getNama());
         System.out.println("NIM: " + mhs.getNim());
         System.out.println("Jurusan: " + mhs.getJurusan());
     }
 
-    // 5. Sequential Cohesion (Kohesi Berurutan) lagi
-    // Contoh tambahan agar lebih jelas alurnya (berurutan)
-    public void prosesAngka(int angka) {
-        int hasilKali = angka * 2;
-        int hasilTambah = hasilKali + 5;
-        System.out.println("Hasil akhir: " + hasilTambah);
-    }
-
-    // Kelas bantu untuk Communicational Cohesion (5)
+    // Inner class sebagai contoh objek untuk communicational cohesion
     public static class Mahasiswa {
         private String nama;
         private String nim;
@@ -59,7 +60,7 @@ public class ContohKohesi {
         public String getJurusan() { return jurusan; }
     }
 
-    // Main method untuk uji coba semua kohesi
+    // Main method untuk uji coba semua jenis kohesi
     public static void main(String[] args) {
         ContohKohesi ck = new ContohKohesi();
 
@@ -72,7 +73,7 @@ public class ContohKohesi {
 
         System.out.println("\n== Functional Cohesion ==");
         int luas = ck.hitungLuas(5);
-        System.out.println("Luas: " + luas);
+        System.out.println("Luas persegi: " + luas);
 
         System.out.println("\n== Communicational Cohesion ==");
         Mahasiswa mhs = new Mahasiswa("Budi", "12345", "Informatika");
