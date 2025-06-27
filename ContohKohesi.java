@@ -76,7 +76,7 @@ public class ContohKohesi {
         System.out.println("Luas persegi: " + luas);
 
         System.out.println("\n== Communicational Cohesion ==");
-        Mahasiswa mhs = new Mahasiswa("Budi", "12345", "Informatika");
+        Mahasiswa mhs = new Mahasiswa("Fajar", "12345", "Informatika");
         ck.tampilkanInfo(mhs);
     }
 }
