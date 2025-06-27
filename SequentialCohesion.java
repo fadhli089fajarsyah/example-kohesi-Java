@@ -1,103 +1,81 @@
 public class ContohKohesi {
 
-    // 1. Functional Cohesion (Kohesi Fungsional)
-    // Method hanya melakukan satu tugas utama: menghitung diskon
-    public double hitungDiskon(double total) {
-        return (total >= 500000) ? total * 0.1 : 0;
+    // 1. Sequential Cohesion (Kohesi Berurutan)
+    // Output dari satu langkah digunakan sebagai input langkah berikutnya
+    public void prosesNama(String nama) {
+        String namaBersih = nama.trim();
+        String namaHurufBesar = namaBersih.toUpperCase();
+        System.out.println("Nama diproses: " + namaHurufBesar);
     }
 
     // 2. Logical Cohesion (Kohesi Logis)
-    // Melakukan operasi berbeda berdasarkan kondisi input
-    public void proses(String aksi, String data) {
-        if (aksi.equals("cetak")) {
-            System.out.println("Mencetak: " + data);
-        } else if (aksi.equals("simpan")) {
-            System.out.println("Menyimpan: " + data);
-        } else if (aksi.equals("hapus")) {
-            System.out.println("Menghapus: " + data);
+    // Melakukan operasi berbeda tergantung kondisi
+    public void aksi(String jenis) {
+        if (jenis.equals("print")) {
+            System.out.println("Mencetak data...");
+        } else if (jenis.equals("save")) {
+            System.out.println("Menyimpan data...");
+        } else if (jenis.equals("hapus")) {
+            System.out.println("Menghapus data...");
         }
     }
 
-    // 3. Communicational Cohesion (Kohesi Komunikasi)
-    // Semua baris menggunakan data dari objek yang sama (User)
-    public void tampilkanProfil(User user) {
-        System.out.println("Nama: " + user.getNama());
-        System.out.println("Email: " + user.getEmail());
-        System.out.println("Alamat: " + user.getAlamat());
+    // 3. Functional Cohesion (Kohesi Fungsional)
+    // Melakukan satu tugas spesifik: menghitung luas persegi
+    public int hitungLuas(int sisi) {
+        return sisi * sisi;
     }
 
-    // 4. Sequential Cohesion (Kohesi Berurutan)
-    // Output dari satu langkah digunakan sebagai input langkah berikutnya
-    public void prosesData(String input) {
-        String hasil1 = bersihkanData(input);
-        String hasil2 = validasiData(hasil1);
-        simpanData(hasil2);
+    // 4. Communicational Cohesion (Kohesi Komunikasi)
+    // Semua baris menggunakan data dari objek yang sama
+    public void tampilkanInfo(Mahasiswa mhs) {
+        System.out.println("Nama: " + mhs.getNama());
+        System.out.println("NIM: " + mhs.getNim());
+        System.out.println("Jurusan: " + mhs.getJurusan());
     }
 
-    // 5. Coincidental Cohesion (Kohesi Kebetulan)
-    // Baris-baris kode tidak berhubungan langsung
-    public void campurAduk() {
-        cetakLaporan();
-        kirimNotifikasi();
-        hitungDiskon(100000); // dari method di atas, tapi konteksnya tidak relevan
+    // 5. Sequential Cohesion (Kohesi Berurutan) lagi
+    // Contoh tambahan agar lebih jelas alurnya (berurutan)
+    public void prosesAngka(int angka) {
+        int hasilKali = angka * 2;
+        int hasilTambah = hasilKali + 5;
+        System.out.println("Hasil akhir: " + hasilTambah);
     }
 
-    // ---------- Simulasi method pembantu ----------
-    private String bersihkanData(String data) {
-        return data.trim();
-    }
-
-    private String validasiData(String data) {
-        return data.matches("[a-zA-Z ]+") ? data : "Data tidak valid";
-    }
-
-    private void simpanData(String data) {
-        System.out.println("Data disimpan: " + data);
-    }
-
-    private void cetakLaporan() {
-        System.out.println("Mencetak laporan...");
-    }
-
-    private void kirimNotifikasi() {
-        System.out.println("Notifikasi dikirim.");
-    }
-
-    // ---------- Class bantu untuk Communicational Cohesion ----------
-    public static class User {
+    // Kelas bantu untuk Communicational Cohesion (5)
+    public static class Mahasiswa {
         private String nama;
-        private String email;
-        private String alamat;
+        private String nim;
+        private String jurusan;
 
-        public User(String nama, String email, String alamat) {
+        public Mahasiswa(String nama, String nim, String jurusan) {
             this.nama = nama;
-            this.email = email;
-            this.alamat = alamat;
+            this.nim = nim;
+            this.jurusan = jurusan;
         }
 
         public String getNama() { return nama; }
-        public String getEmail() { return email; }
-        public String getAlamat() { return alamat; }
+        public String getNim() { return nim; }
+        public String getJurusan() { return jurusan; }
     }
 
-    // ---------- Main untuk uji coba ----------
+    // Main method untuk uji coba semua kohesi
     public static void main(String[] args) {
         ContohKohesi ck = new ContohKohesi();
 
-        // Functional Cohesion
-        System.out.println("Diskon: " + ck.hitungDiskon(600000));
+        System.out.println("== Sequential Cohesion ==");
+        ck.prosesNama("  Fajar  ");
+        ck.prosesAngka(10);
 
-        // Logical Cohesion
-        ck.proses("cetak", "Laporan Mingguan");
+        System.out.println("\n== Logical Cohesion ==");
+        ck.aksi("save");
 
-        // Communicational Cohesion
-        User user = new User("Budi", "budi@mail.com", "Jakarta");
-        ck.tampilkanProfil(user);
+        System.out.println("\n== Functional Cohesion ==");
+        int luas = ck.hitungLuas(5);
+        System.out.println("Luas: " + luas);
 
-        // Sequential Cohesion
-        ck.prosesData(" Data Baru ");
-
-        // Coincidental Cohesion
-        ck.campurAduk();
+        System.out.println("\n== Communicational Cohesion ==");
+        Mahasiswa mhs = new Mahasiswa("Budi", "12345", "Informatika");
+        ck.tampilkanInfo(mhs);
     }
 }
